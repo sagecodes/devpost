@@ -2,6 +2,10 @@ from flask import Flask
 
 app = Flask(__name__)
 
+# dummy data
+
+# Profile operations
+#================================================
 
 #list of profiles created by users
 @app.route('/')
@@ -17,17 +21,45 @@ def NewProfile():
 
 
 # Edit an exsisting profile
-#<int:profile_id>
-@app.route('/profile/1/edit/', methods=['GET', 'POST'])
+@app.route('/profile/<int:profile_id>/edit/', methods=['GET', 'POST'])
 def EditProfile():
     return "Edit a profile"
 
 
 # Delete an exsisting profile
-#<int:profile_id>
-@app.route('/profile/1/delete/', methods=['GET', 'POST'])
+@app.route('/profile/<int:profile_id>/delete/', methods=['GET', 'POST'])
 def DeleteProfile():
     return "Delete a profile"
+
+
+# Project operations
+#================================================
+
+# Show list of project for a selected profile
+@app.route('/profile/<int:profile_id>/')
+@app.route('/profile/<int:profile_id>/projects/')
+def showProjects(profile_id):
+    return "Show Projects for a profile"
+
+
+# Create a new project for selected profile
+@app.route('/profile/<int:profile_id>/project/new/', methods=['GET', 'POST'])
+def newProject(profile_id):
+    return "Create new Project for a profile"
+
+
+# Edit an existing project for selected profile
+@app.route('/profile/<int:profile_id>/project/<int:project_id>/edit/',
+ methods=['GET', 'POST'])
+def editProject(profile_id, project_id):
+    return "Edit Project for a profile"
+
+
+# Delete an existing project for a selected profile
+@app.route('/profile/<int:profile_id>/project/<int:project_id>/delete/',
+ methods=['GET', 'POST'])
+def deleteProject(profile_id, project_id):
+    return "Delete Project for a profile"
 
 
 
