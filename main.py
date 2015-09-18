@@ -10,25 +10,25 @@ app = Flask(__name__)
 #list of profiles created by users
 @app.route('/')
 @app.route('/profiles/')
-def Profiles():
+def showProfiles():
     return "List profiles"
 
 
 # Create a new profile
 @app.route('/profile/new')
-def NewProfile():
+def newProfile():
     return "Create a new profile"
 
 
 # Edit an exsisting profile
 @app.route('/profile/<int:profile_id>/edit/', methods=['GET', 'POST'])
-def EditProfile():
+def editProfile():
     return "Edit a profile"
 
 
 # Delete an exsisting profile
 @app.route('/profile/<int:profile_id>/delete/', methods=['GET', 'POST'])
-def DeleteProfile():
+def deleteProfile():
     return "Delete a profile"
 
 
