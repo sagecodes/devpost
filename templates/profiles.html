@@ -5,4 +5,16 @@
 
  <h1>Hello, World!</h1>
 
+    {% for profile in profiles %}
+
+    <div>
+        <img src="{{profile.picture}}">
+        <a class="profile-name" href='{{url_for('showProjects', profile_id = profile.id) }}'>
+        {{profile.name}}
+        </a>
+    </div>
+
+
+    {% endfor %}
+
  {% endblock %}
