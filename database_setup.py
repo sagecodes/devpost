@@ -9,7 +9,7 @@ Base = declarative_base()
 
 class Profile(Base):
 
-      __tablename__ = 'profile'
+  __tablename__ = 'profile'
 
   id = Column(Integer, primary_key = True)
   name = Column(String(250), nullable = False)
