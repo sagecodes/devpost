@@ -8,7 +8,7 @@
     {% for profile in profiles %}
 
     <div>
-        <img src="{{profile.picture}}">
+        <img src="{{profile.picture}}"> <br>
         <a class="profile-name" href='{{url_for('showProjects', profile_id = profile.id) }}'>
         {{profile.name}}
         </a>

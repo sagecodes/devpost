@@ -53,7 +53,9 @@ def deleteProfile():
 @app.route('/profile/<int:profile_id>/')
 @app.route('/profile/<int:profile_id>/projects/')
 def showProjects(profile_id):
-    return "Show Projects for a profile"
+    profile = session.query(Profile).filter_by(id = profile_id).one()
+    projects = session.query(Project).filter_by(profile_id = profile.id).all()
+    return render_template('projects.html', profile=profile, projects=projects)
 
 
 # Create a new project for selected profile
