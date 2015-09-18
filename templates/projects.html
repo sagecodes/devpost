@@ -21,8 +21,11 @@
         </a>
     </div>
 
-    {% for profile in profiles %}
+    {% for project in projects %}
 
+        <a class="project-name" href='{{project.github}}'>
+        {{project.name}}
+        </a><br>
 
 
     {% endfor %}

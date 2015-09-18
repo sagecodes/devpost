@@ -25,10 +25,8 @@ class Project(Base):
 
   id = Column(Integer, primary_key = True)
   name = Column(String(80), nullable = False)
-
   picture = Column(String(250))
   description = Column(String(250))
-  name = Column(String(250))
   sourcecode = Column(String(250))
   livedemo = Column(String(250))
   profile_id = Column(Integer, ForeignKey('profile.id'))
