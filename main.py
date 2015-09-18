@@ -1,11 +1,24 @@
 from flask import Flask
 
+from database_setup import Base, Profile, Project
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 app = Flask(__name__)
 
-# dummy data
+
+# Database operations
+#=======================================================================
+
+# create Session and connect to database
+engine = create_engine('sqlite:///devpost.db')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
 
 # Profile operations
-#================================================
+#=======================================================================
 
 #list of profiles created by users
 @app.route('/')
@@ -33,7 +46,7 @@ def deleteProfile():
 
 
 # Project operations
-#================================================
+#=======================================================================
 
 # Show list of project for a selected profile
 @app.route('/profile/<int:profile_id>/')
