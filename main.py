@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 from database_setup import Base, Profile, Project
 from sqlalchemy import create_engine
@@ -24,7 +24,8 @@ session = DBSession()
 @app.route('/')
 @app.route('/profiles/')
 def showProfiles():
-    return "List profiles"
+    profiles = session.query(Profile).all()
+    return render_template('profiles.html', profiles=profiles)
 
 
 # Create a new profile
