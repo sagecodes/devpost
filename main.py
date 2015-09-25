@@ -137,7 +137,12 @@ def editProject(profile_id, project_id):
 def deleteProject(profile_id, project_id):
     profile = session.query(Profile).filter_by(id = profile_id).one()
     deleteProject = session.query(Project).filter_by(id=project_id).one()
-    return render_template('deleteProject.html', profile=profile,
+    if request.method == 'POST':
+        session.delete(deleteProject)
+        session.commit()
+        return redirect(url_for('showProjects', profile_id=profile_id))
+    else:
+        return render_template('deleteProject.html', profile=profile,
                                                     project = deleteProject)
 
 
