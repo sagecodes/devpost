@@ -7,7 +7,8 @@
 
     <div>
         <img src="{{profile.picture}}"> <br>
-        <a class="profile-name" href='{{url_for('showProjects', profile_id = profile.id) }}'>
+        <a class="profile-name" href='{{url_for('showProjects',
+         profile_id = profile.id) }}'>
         {{profile.name}}
         </a><br>
         <a class="" href='mailto:{{ profile.email }}'>
@@ -23,13 +24,25 @@
 
     {% for project in projects %}
 
-        <a class="project-name" href='{{project.github}}'>
+        <br>
+        <hr>
+
+        <a class="project-name" href='{{project.name}}'>
         {{project.name}}
         </a><br>
+
+        <a class="project-picture" href='{{project.picture}}'>
+        <img src="{{project.picture}}">
+        </a><br>
+
+        <p class="project-description">
+        {{project.description}}
+        </p><br>
+
     {% endfor %}
 
         <br>
-
+        <hr>
         <a href='{{url_for('editProfile',
          profile_id = profile.id) }}'>Edit Profile</a>
 
