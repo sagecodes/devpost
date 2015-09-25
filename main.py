@@ -92,7 +92,18 @@ def showProjects(profile_id):
 @app.route('/profile/<int:profile_id>/project/new/', methods=['GET', 'POST'])
 def newProject(profile_id):
     profile = session.query(Profile).filter_by(id = profile_id).one()
-    return render_template('newProject.html', profile=profile)
+    if request.method == 'POST':
+        newProject = Project(name = request.form['name'],
+                            picture = request.form['picture'],
+                            description = request.form['description'],
+                            sourcecode = request.form['sourcecode'],
+                            livedemo = request.form['livedemo'],
+                            profile_id = profile_id)
+        session.add(newProject)
+        session.commit()
+        return redirect(url_for('showProjects', profile_id = profile_id))
+    else:
+        return render_template('newProject.html', profile=profile)
 
 
 # Edit an existing project for selected profile
