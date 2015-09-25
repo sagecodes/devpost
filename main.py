@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
 
 from database_setup import Base, Profile, Project
 from sqlalchemy import create_engine
@@ -31,7 +31,15 @@ def showProfiles():
 # Create a new profile
 @app.route('/profile/new/' , methods=['GET', 'POST'])
 def newProfile():
-    return render_template('newProfile.html')
+    if request.method == 'POST':
+        newProfile = Profile(name = request.form['name'],
+        picture = request.form['picture'], email = request.form['email'],
+        github = request.form['github'], twitter = request.form['twitter'] )
+        session.add(newProfile)
+        session.commit()
+        return redirect(url_for('showProfiles'))
+    else:
+        return render_template('newProfile.html')
 
 
 # Edit an exsisting profile
