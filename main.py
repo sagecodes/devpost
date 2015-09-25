@@ -66,8 +66,14 @@ def editProfile(profile_id):
 
 # Delete an exsisting profile
 @app.route('/profile/<int:profile_id>/delete/', methods=['GET', 'POST'])
-def deleteProfile():
-    return "hello"
+def deleteProfile(profile_id):
+    deleteProfile = session.query(Profile).filter_by(id = profile_id).one()
+    if request.method == 'POST':
+        session.delete(deleteProfile)
+        session.commit()
+        return redirect(url_for('showProfiles'))
+    else:
+        return render_template('deleteProfile.html', profile=deleteProfile)
 
 
 # Project operations
