@@ -110,7 +110,10 @@ def newProject(profile_id):
 @app.route('/profile/<int:profile_id>/project/<int:project_id>/edit/',
  methods=['GET', 'POST'])
 def editProject(profile_id, project_id):
-    return "Edit Project for a profile"
+    profile = session.query(Profile).filter_by(id = profile_id).one()
+    editProject = session.query(Project).filter_by(id=project_id).one()
+    return render_template('editProject.html', profile=profile,
+     project=editProject)
 
 
 # Delete an existing project for a selected profile
