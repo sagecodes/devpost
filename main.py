@@ -135,7 +135,10 @@ def editProject(profile_id, project_id):
 @app.route('/profile/<int:profile_id>/project/<int:project_id>/delete/',
  methods=['GET', 'POST'])
 def deleteProject(profile_id, project_id):
-    return "Delete Project for a profile"
+    profile = session.query(Profile).filter_by(id = profile_id).one()
+    deleteProject = session.query(Project).filter_by(id=project_id).one()
+    return render_template('deleteProject.html', profile=profile,
+                                                    project = deleteProject)
 
 
 
