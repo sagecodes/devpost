@@ -91,7 +91,8 @@ def showProjects(profile_id):
 # Create a new project for selected profile
 @app.route('/profile/<int:profile_id>/project/new/', methods=['GET', 'POST'])
 def newProject(profile_id):
-    return "Create new Project for a profile"
+    profile = session.query(Profile).filter_by(id = profile_id).one()
+    return render_template('newProject.html', profile=profile)
 
 
 # Edit an existing project for selected profile
