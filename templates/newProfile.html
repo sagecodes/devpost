@@ -1,0 +1,30 @@
+ {% extends "layout.html" %}
+ {% block title %}{{ super() }} {% endblock %}
+
+ {% block content %}
+
+ <h1>New Profile</h1>
+
+    <form action ="{{ url_for('newProfile')}}" method = 'post'>
+
+        <p>Name:</p>
+        <input type='text' size='30' name='name'>
+
+        <p>Profile Picture (URL):</p>
+        <input type='text' size='30' name='name'>
+
+        <p>Email:</p>
+        <input type='text' size='30' name='name'>
+
+        <p>Github (URL):</p>
+        <input type='text' size='30' name='name'>
+
+        <p>Twitter (URL):</p>
+        <input type='text' size='30' name='name'>
+
+        <input type='submit' value='Create'>
+        <a href='{{url_for('showProfiles') }}'>Cancel</a>
+    </form>
+
+
+ {% endblock %}

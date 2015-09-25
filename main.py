@@ -31,7 +31,7 @@ def showProfiles():
 # Create a new profile
 @app.route('/profile/new/' , methods=['GET', 'POST'])
 def newProfile():
-    return "Create a new profile"
+    return render_template('newProfile.html')
 
 
 # Edit an exsisting profile
