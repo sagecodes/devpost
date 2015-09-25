@@ -112,8 +112,23 @@ def newProject(profile_id):
 def editProject(profile_id, project_id):
     profile = session.query(Profile).filter_by(id = profile_id).one()
     editProject = session.query(Project).filter_by(id=project_id).one()
-    return render_template('editProject.html', profile=profile,
-     project=editProject)
+    if request.method == 'POST':
+        if request.form['name']:
+            editProject.name = request.form['name']
+        if request.form['picture']:
+            editProject.picture = request.form['picture']
+        if request.form['description']:
+            editProject.email = request.form['description']
+        if request.form['sourcecode']:
+            editProject.sourcecode = request.form['sourcecode']
+        if request.form['livedemo']:
+            editProject.livedemo = request.form['livedemo']
+        session.add(editProject)
+        session.commit()
+        return redirect(url_for('showProjects', profile_id = profile_id))
+    else:
+        return render_template('editProject.html', profile=profile,
+        project=editProject)
 
 
 # Delete an existing project for a selected profile

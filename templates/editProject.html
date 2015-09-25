@@ -18,15 +18,15 @@
 
         <p>Description:</p>
         <input type='text' size='30' name='description'
-        placeholder = "{{ profile.description }}">
+        placeholder = "{{ project.description }}">
 
         <p>Source Code (URL):</p>
         <input type='text' size='30' name='sourcecode'
-        placeholder = "{{ profile.sourcecode }}">
+        placeholder = "{{ project.sourcecode }}">
 
         <p>Live Demo (URL):</p>
         <input type='text' size='30' name='livedemo'
-        placeholder = "{{ profile.livedemo }}">
+        placeholder = "{{ project.livedemo }}">
 
         <input type='submit' value='Update'>
         <a href='{{url_for('showProjects', profile_id = profile.id) }}'>Cancel</a>
