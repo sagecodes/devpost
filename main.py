@@ -44,14 +44,15 @@ def newProfile():
 
 # Edit an exsisting profile
 @app.route('/profile/<int:profile_id>/edit/', methods=['GET', 'POST'])
-def editProfile():
-    return "Edit a profile"
+def editProfile(profile_id):
+    editProfile = session.query(Profile).filter_by(id = profile_id).one()
+    return render_template('editProfile.html', profile = editProfile)
 
 
 # Delete an exsisting profile
 @app.route('/profile/<int:profile_id>/delete/', methods=['GET', 'POST'])
 def deleteProfile():
-    return "Delete a profile"
+    return "hello"
 
 
 # Project operations
