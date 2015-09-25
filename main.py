@@ -46,7 +46,22 @@ def newProfile():
 @app.route('/profile/<int:profile_id>/edit/', methods=['GET', 'POST'])
 def editProfile(profile_id):
     editProfile = session.query(Profile).filter_by(id = profile_id).one()
-    return render_template('editProfile.html', profile = editProfile)
+    if request.method == 'POST':
+        if request.form['name']:
+            editProfile.name = request.form['name']
+        if request.form['picture']:
+            editProfile.picture = request.form['picture']
+        if request.form['email']:
+            editProfile.email = request.form['email']
+        if request.form['github']:
+            editProfile.github = request.form['github']
+        if request.form['twitter']:
+            editProfile.twitter = request.form['twitter']
+        session.add(editProfile)
+        session.commit()
+        return redirect(url_for('showProfiles'))
+    else:
+        return render_template('editProfile.html', profile=editProfile)
 
 
 # Delete an exsisting profile
