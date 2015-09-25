@@ -24,6 +24,10 @@
         </a>
     </div>
 
+    <br>
+
+    <a href='{{url_for('newProject',
+         profile_id = profile.id) }}'>New Project</a>
     {% for project in projects %}
 
         <br>
@@ -40,6 +44,12 @@
         <p class="project-description">
         {{project.description}}
         </p><br>
+        <a href='{{url_for('editProject',
+         profile_id = profile.id, project_id = project.id) }}'>Edit Project</a>
+
+        <a href = '{{url_for('deleteProject',
+         profile_id = profile.id, project_id = project.id) }}'>Delete Project</a>
+         <br>
 
     {% endfor %}
 
