@@ -26,8 +26,13 @@
         <a class="project-name" href='{{project.github}}'>
         {{project.name}}
         </a><br>
-
-
     {% endfor %}
 
+        <br>
+
+        <a href='{{url_for('editProfile',
+         profile_id = profile.id) }}'>Edit Profile</a>
+
+        <a href = '{{url_for('deleteProfile',
+         profile_id = profile.id) }}'>Delete profile</a>
  {% endblock %}
