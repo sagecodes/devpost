@@ -28,30 +28,63 @@
 
     <a href='{{url_for('newProject',
          profile_id = profile.id) }}'>New Project</a>
+
+         <div id="portfolio" class="row">
+            <div class=" col-12">
+                <h2 class="text-center">My Portfolio</h2>
+            </div>
     {% for project in projects %}
 
-        <br>
-        <hr>
 
-        <a class="project-name" href='{{project.name}}'>
-        {{project.name}}
-        </a><br>
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="{{ project.picture }}" alt="project picture">
+                    <div class="caption">
+                        <h3>{{project.name}}</h3>
+                        <p>{{ project.description }} <a data-toggle="modal"
+                         data-target="#{{project.name}}">Read more</a>
+                        </p>
+                        <p><a href="{{ project.sourcecode }}" class="btn btn-primary"
+                        role="button">Github</a> <a href="{{ project.livedemo }}"
+                        class="btn btn-default" role="button">Demo</a>
+                        </p>
+                        <a href='{{url_for('editProject',
+                         profile_id = profile.id, project_id = project.id) }}'>Edit</a>
 
-        <a class="project-picture" href='{{project.picture}}'>
-        <img src="{{project.picture}}">
-        </a><br>
+                        <a href = '{{url_for('deleteProject',
+                         profile_id = profile.id, project_id = project.id) }}'>Delete</a>
+                    </div>
+                </div>
+            </div>
 
-        <p class="project-description">
-        {{project.description}}
-        </p><br>
-        <a href='{{url_for('editProject',
-         profile_id = profile.id, project_id = project.id) }}'>Edit Project</a>
+            <!-- Project Modal -->
+        <div class="modal fade" id="{{project.name}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">{{project.name}}</h4>
+                    </div>
+                    <div class="modal-body">
 
-        <a href = '{{url_for('deleteProject',
-         profile_id = profile.id, project_id = project.id) }}'>Delete Project</a>
-         <br>
+                        {{project.description}}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Github</button>
+                        <button type="button" class="btn btn-default">Demo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
 
     {% endfor %}
+    </div>
 
         <br>
         <hr>
@@ -61,3 +94,25 @@
         <a href = '{{url_for('deleteProfile',
          profile_id = profile.id) }}'>Delete profile</a>
  {% endblock %}
+
+         <!-- Project Modal -->
+        <div class="modal fade" id="{{project.name}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">{{project.name}}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        {{project.description}}
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Github</button>
+                        <button type="button" class="btn btn-default">Demo</button>
+                    </div>
+                </div>
+            </div>
+        </div>
