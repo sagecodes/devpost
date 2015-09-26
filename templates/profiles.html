@@ -3,7 +3,8 @@
 
  {% block content %}
 
- <h1>Hello, World!</h1>
+ <h1>Profile list</h1>
+<a href='{{url_for('newProfile') }}'>New Profile</a>
 
     {% for profile in profiles %}
 
