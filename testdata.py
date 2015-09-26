@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 # create Session and connect to database
-engine = create_engine('sqlite:///devpost.db')
+engine = create_engine('sqlite:///devpostusers.db')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -14,7 +14,8 @@ profile1 = Profile(name="Sage Elliott",
                     email="hello@sageelliott.com",
                     picture="http://sageelliott.com/tmp/img/sage.jpg",
                     github="https://github.com/sageio",
-                    twitter="https://twitter.com/sagecoder")
+                    twitter="https://twitter.com/sagecoder",
+                    user_id=1)
 
 session.add(profile1)
 session.commit()
@@ -36,7 +37,8 @@ profile2 = Profile(name="Sage Elliott 2",
                     email="hello@sageelliott.com",
                     picture="http://sageelliott.com/tmp/img/sage.jpg",
                     github="https://github.com/sageio",
-                    twitter="https://twitter.com/sagecoder")
+                    twitter="https://twitter.com/sagecoder",
+                    user_id=1)
 
 session.add(profile2)
 session.commit()

@@ -48,6 +48,6 @@ class Project(Base):
 
 
 engine = create_engine(
-  'sqlite:///devpost.db')
+  'sqlite:///devpostusers.db')
 
 Base.metadata.create_all(engine)
