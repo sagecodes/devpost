@@ -118,7 +118,7 @@ def editProject(profile_id, project_id):
         if request.form['picture']:
             editProject.picture = request.form['picture']
         if request.form['description']:
-            editProject.email = request.form['description']
+            editProject.description = request.form['description']
         if request.form['sourcecode']:
             editProject.sourcecode = request.form['sourcecode']
         if request.form['livedemo']:
