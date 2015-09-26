@@ -1,0 +1,23 @@
+ {% extends "layout.html" %}
+ {% block title %}{{ super() }} {% endblock %}
+
+ {% block content %}
+    <script src="//apis.google.com/js/platform.js?onload=start"> </script>
+
+    <h1> Login with Google </h1>
+
+    <div id="signInButton">
+        <span class="g-signin"
+            data-scope="openid email"
+            data-clientid ="434365151818-rbqecucukglsfi4vbl966loqigr7r4b2.apps.googleusercontent.com"
+            data-redirecturi="postmessage"
+            data-accesstype="offline"
+            data-cookiepolicy="single_host_origin"
+            data-callback="signInCallback"
+            data-approvalprompt="force">
+        </span>
+    </div>
+
+
+
+ {% endblock %}
