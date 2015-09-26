@@ -30,6 +30,9 @@ session = DBSession()
 # Authentication and Authorization
 #=======================================================================
 
+CLIENT_ID = json.loads(
+    open('client_secrets.json', 'r').read())['web']['client_id']
+
 @app.route('/login/')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
