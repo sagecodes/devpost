@@ -17,6 +17,16 @@ body {
     margin: 0px;
 }
 
-img {
-    max-width: 200px;
+.profile-photo {
+    display: block;
+    max-width: 20%;
+    min-width: 170px;
+    max-width: 300px;
+    margin: 0 auto 10px;
+    border-radius: 100%;
+}
+
+.project-photo {
+    max-height: 200px;
+    overflow: hidden;
 }

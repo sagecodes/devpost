@@ -112,6 +112,7 @@ def newProject(profile_id):
 def editProject(profile_id, project_id):
     profile = session.query(Profile).filter_by(id = profile_id).one()
     editProject = session.query(Project).filter_by(id=project_id).one()
+    truncate = []
     if request.method == 'POST':
         if request.form['name']:
             editProject.name = request.form['name']
