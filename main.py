@@ -179,6 +179,8 @@ def showProfiles():
 # Create a new profile
 @app.route('/profile/new/' , methods=['GET', 'POST'])
 def newProfile():
+    if 'username' not in login_session:
+        return redirect('/login')
     if request.method == 'POST':
         newProfile = Profile(name = request.form['name'],
         picture = request.form['picture'], email = request.form['email'],
@@ -193,6 +195,8 @@ def newProfile():
 # Edit an exsisting profile
 @app.route('/profile/<int:profile_id>/edit/', methods=['GET', 'POST'])
 def editProfile(profile_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     editProfile = session.query(Profile).filter_by(id = profile_id).one()
     if request.method == 'POST':
         if request.form['name']:
@@ -215,6 +219,8 @@ def editProfile(profile_id):
 # Delete an exsisting profile
 @app.route('/profile/<int:profile_id>/delete/', methods=['GET', 'POST'])
 def deleteProfile(profile_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     deleteProfile = session.query(Profile).filter_by(id = profile_id).one()
     if request.method == 'POST':
         session.delete(deleteProfile)
@@ -239,6 +245,8 @@ def showProjects(profile_id):
 # Create a new project for selected profile
 @app.route('/profile/<int:profile_id>/project/new/', methods=['GET', 'POST'])
 def newProject(profile_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     profile = session.query(Profile).filter_by(id = profile_id).one()
     if request.method == 'POST':
         newProject = Project(name = request.form['name'],
@@ -258,6 +266,8 @@ def newProject(profile_id):
 @app.route('/profile/<int:profile_id>/project/<int:project_id>/edit/',
  methods=['GET', 'POST'])
 def editProject(profile_id, project_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     profile = session.query(Profile).filter_by(id = profile_id).one()
     editProject = session.query(Project).filter_by(id=project_id).one()
     if request.method == 'POST':
@@ -283,6 +293,8 @@ def editProject(profile_id, project_id):
 @app.route('/profile/<int:profile_id>/project/<int:project_id>/delete/',
  methods=['GET', 'POST'])
 def deleteProject(profile_id, project_id):
+    if 'username' not in login_session:
+        return redirect('/login')
     profile = session.query(Profile).filter_by(id = profile_id).one()
     deleteProject = session.query(Project).filter_by(id=project_id).one()
     if request.method == 'POST':
