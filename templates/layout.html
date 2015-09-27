@@ -11,6 +11,43 @@
         </head>
         <body>
              <div class="container">
+                <!-- Navigation
+                ==========================================================================-->
+
+                <nav class="navbar navbar-default">
+                    <div class="container-fluid">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                                Menu
+                            </button>
+
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <ul class="nav navbar-nav navbar-text">
+                                <li>DEVPOST</li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="{{url_for('showProfiles')}}">Profiles</a>
+                                </li>
+                                <li><a href="#portfolio">MyProfiles</a>
+                                </li>
+                                <li> {% if 'username' not in session %}
+                                        <a href="{{url_for('showLogin')}}"> Login</a>
+                                    {% else %}
+                                        <a href="{{url_for('gdisconnect')}}">Logout</a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+                <hr>
+
                 {% block content %}{% endblock %}
             </div>
 
