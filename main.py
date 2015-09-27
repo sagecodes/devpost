@@ -184,7 +184,8 @@ def newProfile():
     if request.method == 'POST':
         newProfile = Profile(name = request.form['name'],
         picture = request.form['picture'], email = request.form['email'],
-        github = request.form['github'], twitter = request.form['twitter'] )
+        github = request.form['github'], twitter = request.form['twitter'],
+        user_id = login_session['user_id'] )
         session.add(newProfile)
         session.commit()
         return redirect(url_for('showProfiles'))
@@ -254,7 +255,8 @@ def newProject(profile_id):
                             description = request.form['description'],
                             sourcecode = request.form['sourcecode'],
                             livedemo = request.form['livedemo'],
-                            profile_id = profile_id)
+                            profile_id = profile_id,
+                            user_id = profile.user_id)
         session.add(newProject)
         session.commit()
         return redirect(url_for('showProjects', profile_id = profile_id))
