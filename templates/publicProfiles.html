@@ -1,0 +1,21 @@
+ {% extends "layout.html" %}
+ {% block title %}{{ super() }} {% endblock %}
+
+ {% block content %}
+
+ <h1>Profile list</h1>
+
+    {% for profile in profiles %}
+
+    <div>
+        <img class="profile-photo" src="{{profile.picture}}"> <br>
+        <a class="profile-name" href='{{url_for('showProjects',
+         profile_id = profile.id) }}'>
+        {{profile.name}}
+        </a>
+    </div>
+
+
+    {% endfor %}
+
+ {% endblock %}

@@ -173,7 +173,10 @@ def gdisconnect():
 @app.route('/profiles/')
 def showProfiles():
     profiles = session.query(Profile).all()
-    return render_template('profiles.html', profiles=profiles)
+    if 'username' not in login_session:
+        return render_template('publicProfiles.html', profiles=profiles)
+    else:
+        return render_template('profiles.html', profiles=profiles)
 
 
 # Create a new profile
@@ -244,7 +247,11 @@ def deleteProfile(profile_id):
 def showProjects(profile_id):
     profile = session.query(Profile).filter_by(id = profile_id).one()
     projects = session.query(Project).filter_by(profile_id = profile.id).all()
-    return render_template('projects.html', profile=profile, projects=projects)
+    creator = getUserInfo(profile.user_id)
+    if 'username' not in login_session or creator.id != login_session["user_id"]:
+        return render_template('publicProjects.html', profile=profile, projects=projects)
+    else:
+        return render_template('projects.html', profile=profile, projects=projects)
 
 
 # Create a new project for selected profile

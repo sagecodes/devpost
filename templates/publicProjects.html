@@ -1,0 +1,90 @@
+ {% extends "layout.html" %}
+ {% block title %}{{ super() }} {% endblock %}
+
+ {% block content %}
+
+ <a href='{{url_for('showProfiles') }}'><< All Profiles</a>
+
+ <h1>{{profile.name}}</h1>
+
+    <div>
+        <img class="profile-photo" src="{{profile.picture}}"> <br>
+        <a class="profile-name" href='{{url_for('showProjects',
+         profile_id = profile.id) }}'>
+        {{profile.name}}
+        </a><br>
+        <a class="" href='mailto:{{ profile.email }}'>
+        {{profile.email}}
+        </a><br>
+        <a class="" href='{{ profile.github }}'>
+        {{profile.github}}
+        </a><br>
+        <a class="" href='{{ profile.twitter }}'>
+        {{profile.twitter}}
+        </a>
+    </div>
+
+    <br>
+
+
+
+         <div id="portfolio" class="row">
+            <div class=" col-12">
+                <h2 class="text-center">My Portfolio</h2>
+            </div>
+
+    {% for project in projects %}
+
+
+
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img class="project-photo" src="{{ project.picture }}" alt="project picture">
+                <div class="caption">
+                    <h3>{{project.name}}</h3>
+                    <p>{{ project.description[:180] + '..' }} <a data-toggle="modal"
+                     data-target="#{{project.name}}">Read more</a>
+                    </p>
+                    <p><a href="{{ project.sourcecode }}" class="btn btn-primary"
+                    role="button">Github</a> <a href="{{ project.livedemo }}"
+                    class="btn btn-default" role="button">Demo</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+            <!-- Project Modal -->
+        <div class="modal fade" id="{{project.name}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">{{project.name}}</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        {{project.description}}
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{ project.sourcecode }}" class="btn btn-primary"
+                    role="button">Github</a> <a href="{{ project.livedemo }}"
+                    class="btn btn-default" role="button">Demo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    {% endfor %}
+    </div>
+
+        <br>
+        <hr>
+
+ {% endblock %}
