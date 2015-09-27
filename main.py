@@ -114,10 +114,10 @@ def gconnect():
     login_session['email'] = data['email']
 
     # # check if user exists, if not create new user:
-    # user_id = getUserId(login_session['email'])
-    # if not user_id:
-    #     user_id = createUser(login_session)
-    # login_session['user_id'] = user_id
+    user_id = getUserId(login_session['email'])
+    if not user_id:
+        user_id = createUser(login_session)
+    login_session['user_id'] = user_id
 
 
     output = ''
@@ -199,6 +199,8 @@ def editProfile(profile_id):
     if 'username' not in login_session:
         return redirect('/login')
     editProfile = session.query(Profile).filter_by(id = profile_id).one()
+    if editProfile.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editProfile.name = request.form['name']
@@ -223,6 +225,8 @@ def deleteProfile(profile_id):
     if 'username' not in login_session:
         return redirect('/login')
     deleteProfile = session.query(Profile).filter_by(id = profile_id).one()
+    if deleteProfile.user_id != login_session['user_id']:
+        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(deleteProfile)
         session.commit()
@@ -249,6 +253,8 @@ def newProject(profile_id):
     if 'username' not in login_session:
         return redirect('/login')
     profile = session.query(Profile).filter_by(id = profile_id).one()
+    if login_session['user_id'] != profile.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         newProject = Project(name = request.form['name'],
                             picture = request.form['picture'],
@@ -272,6 +278,8 @@ def editProject(profile_id, project_id):
         return redirect('/login')
     profile = session.query(Profile).filter_by(id = profile_id).one()
     editProject = session.query(Project).filter_by(id=project_id).one()
+    if login_session['user_id'] != profile.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name']:
             editProject.name = request.form['name']
@@ -299,6 +307,8 @@ def deleteProject(profile_id, project_id):
         return redirect('/login')
     profile = session.query(Profile).filter_by(id = profile_id).one()
     deleteProject = session.query(Project).filter_by(id=project_id).one()
+    if login_session['user_id'] != profile.user_id:
+        return "<script>function myFunction() {alert('You are not authorized to edit this item');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(deleteProject)
         session.commit()
