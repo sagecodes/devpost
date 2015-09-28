@@ -5,7 +5,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from flask import session as login_session
-import random, string
+import random
+import string
 
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.client import FlowExchangeError
@@ -18,7 +19,7 @@ app = Flask(__name__)
 
 
 # Database operations
-#=======================================================================
+# =======================================================================
 
 # create Session and connect to database
 engine = create_engine('sqlite:///devpostusers.db')
@@ -28,16 +29,17 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Authentication and Authorization
-#=======================================================================
+# =======================================================================
 
 CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "devpost"
 
+
 @app.route('/login/')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
-                                                    for x in xrange(32))
+                    for x in xrange(32))
     login_session['state'] = state
     return render_template('login.html', STATE=state)
 
@@ -49,7 +51,7 @@ def gconnect():
         response = make_response(json.dumps('Invalid state parameter.'), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-    #obtain authorization code
+    # obtain authorization code
     code = request.data
 
     try:
@@ -66,7 +68,7 @@ def gconnect():
     # Check access token is valid
     access_token = credentials.access_token
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
-            % access_token)
+           % access_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
     # If error in access token info abort:
@@ -89,12 +91,12 @@ def gconnect():
         print "Token's client ID does not match app's."
         response.headers['Content-Type'] = 'application/json'
         return response
-    #check to see if user is already logged in:
+    # check to see if user is already logged in:
     stored_credentials = login_session.get('credentials')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_credentials is not None and gplus_id == stored_gplus_id:
-        response = make_response(json.dumps('Current user is already connected.'),
-                                 200)
+        response = make_response(
+            json.dumps('Current user is already connected.'), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -119,14 +121,14 @@ def gconnect():
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
 
-
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ''' " style = "width: 300px; height: 300px;border-radius: 150px;
+                -webkit-border-radius: 150px;-moz-border-radius: 150px;"> '''
     flash("You are now logged in as %s" % login_session['username'])
     print "done!"
     return output
@@ -134,10 +136,11 @@ def gconnect():
 
 @app.route("/gdisconnect/")
 def gdisconnect():
-    #only disconnect a connected user.
+    # only disconnect a connected user.
     credentials = login_session.get('credentials')
     if credentials is None:
-        response = make_response(json.dumps("Current user not connected."), 401)
+        response = make_response(
+            json.dumps("Current user not connected."), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
 
@@ -166,9 +169,9 @@ def gdisconnect():
 
 
 # Profile operations
-#=======================================================================
+# =======================================================================
 
-#list of profiles created by users
+# list of profiles created by users
 @app.route('/')
 @app.route('/profiles/')
 def showProfiles():
@@ -178,16 +181,19 @@ def showProfiles():
     else:
         return render_template('profiles.html', profiles=profiles)
 
+
 # Create a new profile
-@app.route('/profile/new/' , methods=['GET', 'POST'])
+@app.route('/profile/new/', methods=['GET', 'POST'])
 def newProfile():
     if 'username' not in login_session:
         return redirect('/login')
     if request.method == 'POST':
-        newProfile = Profile(name = request.form['name'],
-        picture = request.form['picture'], email = request.form['email'],
-        github = request.form['github'], twitter = request.form['twitter'],
-        user_id = login_session['user_id'] )
+        newProfile = Profile(name=request.form['name'],
+                             picture=request.form['picture'],
+                             email=request.form['email'],
+                             github=request.form['github'],
+                             twitter=request.form['twitter'],
+                             user_id=login_session['user_id'])
         session.add(newProfile)
         session.commit()
         flash("You have been successfully created new profile")
@@ -201,9 +207,11 @@ def newProfile():
 def editProfile(profile_id):
     if 'username' not in login_session:
         return redirect('/login')
-    editProfile = session.query(Profile).filter_by(id = profile_id).one()
+    editProfile = session.query(Profile).filter_by(id=profile_id).one()
     if editProfile.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction()
+        {alert('You are not authorized to edit this item');}
+        </script><body onload='myFunction()''>"""
     if request.method == 'POST':
         if request.form['name']:
             editProfile.name = request.form['name']
@@ -228,9 +236,11 @@ def editProfile(profile_id):
 def deleteProfile(profile_id):
     if 'username' not in login_session:
         return redirect('/login')
-    deleteProfile = session.query(Profile).filter_by(id = profile_id).one()
+    deleteProfile = session.query(Profile).filter_by(id=profile_id).one()
     if deleteProfile.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this restaurant');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction()
+        {alert('You are not authorized to edit this item');}
+        </script><body onload='myFunction()''>"""
     if request.method == 'POST':
         session.delete(deleteProfile)
         session.commit()
@@ -241,19 +251,22 @@ def deleteProfile(profile_id):
 
 
 # Project operations
-#=======================================================================
+# =======================================================================
 
 # Show list of project for a selected profile
 @app.route('/profile/<int:profile_id>/')
 @app.route('/profile/<int:profile_id>/projects/')
 def showProjects(profile_id):
-    profile = session.query(Profile).filter_by(id = profile_id).one()
-    projects = session.query(Project).filter_by(profile_id = profile.id).all()
+    profile = session.query(Profile).filter_by(id=profile_id).one()
+    projects = session.query(Project).filter_by(profile_id=profile.id).all()
     creator = getUserInfo(profile.user_id)
-    if 'username' not in login_session or creator.id != login_session["user_id"]:
-        return render_template('publicProjects.html', profile=profile, projects=projects)
+    if ('username' not in login_session or creator.id !=
+       login_session["user_id"]):
+        return render_template('publicProjects.html', profile=profile,
+                               projects=projects)
     else:
-        return render_template('projects.html', profile=profile, projects=projects)
+        return render_template('projects.html', profile=profile,
+                               projects=projects)
 
 
 # Create a new project for selected profile
@@ -261,35 +274,39 @@ def showProjects(profile_id):
 def newProject(profile_id):
     if 'username' not in login_session:
         return redirect('/login')
-    profile = session.query(Profile).filter_by(id = profile_id).one()
+    profile = session.query(Profile).filter_by(id=profile_id).one()
     if login_session['user_id'] != profile.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit this item');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction()
+        {alert('You are not authorized to edit this item');}
+        </script><body onload='myFunction()''>"""
     if request.method == 'POST':
-        newProject = Project(name = request.form['name'],
-                            picture = request.form['picture'],
-                            description = request.form['description'],
-                            sourcecode = request.form['sourcecode'],
-                            livedemo = request.form['livedemo'],
-                            profile_id = profile_id,
-                            user_id = profile.user_id)
+        newProject = Project(name=request.form['name'],
+                             picture=request.form['picture'],
+                             description=request.form['description'],
+                             sourcecode=request.form['sourcecode'],
+                             livedemo=request.form['livedemo'],
+                             profile_id=profile_id,
+                             user_id=profile.user_id)
         session.add(newProject)
         session.commit()
         flash("You have been successfully created new project")
-        return redirect(url_for('showProjects', profile_id = profile_id))
+        return redirect(url_for('showProjects', profile_id=profile_id))
     else:
         return render_template('newProject.html', profile=profile)
 
 
 # Edit an existing project for selected profile
 @app.route('/profile/<int:profile_id>/project/<int:project_id>/edit/',
- methods=['GET', 'POST'])
+           methods=['GET', 'POST'])
 def editProject(profile_id, project_id):
     if 'username' not in login_session:
         return redirect('/login')
-    profile = session.query(Profile).filter_by(id = profile_id).one()
+    profile = session.query(Profile).filter_by(id=profile_id).one()
     editProject = session.query(Project).filter_by(id=project_id).one()
     if login_session['user_id'] != profile.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit this item');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction()
+        {alert('You are not authorized to edit this item');}
+        </script><body onload='myFunction()''>"""
     if request.method == 'POST':
         if request.form['name']:
             editProject.name = request.form['name']
@@ -304,22 +321,24 @@ def editProject(profile_id, project_id):
         session.add(editProject)
         session.commit()
         flash("You have been successfully updated project")
-        return redirect(url_for('showProjects', profile_id = profile_id))
+        return redirect(url_for('showProjects', profile_id=profile_id))
     else:
         return render_template('editProject.html', profile=profile,
-        project=editProject)
+                               project=editProject)
 
 
 # Delete an existing project for a selected profile
 @app.route('/profile/<int:profile_id>/project/<int:project_id>/delete/',
- methods=['GET', 'POST'])
+           methods=['GET', 'POST'])
 def deleteProject(profile_id, project_id):
     if 'username' not in login_session:
         return redirect('/login')
-    profile = session.query(Profile).filter_by(id = profile_id).one()
+    profile = session.query(Profile).filter_by(id=profile_id).one()
     deleteProject = session.query(Project).filter_by(id=project_id).one()
     if login_session['user_id'] != profile.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit this item');}</script><body onload='myFunction()''>"
+        return """<script>function myFunction()
+        {alert('You are not authorized to edit this item');}
+        </script><body onload='myFunction()''>"""
     if request.method == 'POST':
         session.delete(deleteProject)
         session.commit()
@@ -327,29 +346,32 @@ def deleteProject(profile_id, project_id):
         return redirect(url_for('showProjects', profile_id=profile_id))
     else:
         return render_template('deleteProject.html', profile=profile,
-                                                    project = deleteProject)
+                               project=deleteProject)
+
 
 def getUserId(email):
     try:
-        user = session.query(User).filter_by(email = email).one()
+        user = session.query(User).filter_by(email=email).one()
         return user.id
     except:
         return None
 
+
 def getUserInfo(user_id):
-    user = session.query(User).filter_by(id = user_id).one()
+    user = session.query(User).filter_by(id=user_id).one()
     return user
 
+
 def createUser(login_session):
-    newUser = User(name = login_session['username'],
-                    email = login_session['email'],
-                    picture = login_session['picture'])
+    newUser = User(name=login_session['username'],
+                   email=login_session['email'],
+                   picture=login_session['picture'])
     session.add(newUser)
     session.commit()
-    user = session.query(User).filter_by(email = login_session['email']).one()
+    user = session.query(User).filter_by(email=login_session['email']).one()
     return user
 
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(host = '0.0.0.0', port = 3000)
+    app.run(host='0.0.0.0', port=3000)
