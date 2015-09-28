@@ -127,7 +127,7 @@ def gconnect():
     output += '<img src="'
     output += login_session['picture']
     output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
-    flash("you are now logged in as %s" % login_session['username'])
+    flash("You are now logged in as %s" % login_session['username'])
     print "done!"
     return output
 
@@ -191,6 +191,7 @@ def newProfile():
         user_id = login_session['user_id'] )
         session.add(newProfile)
         session.commit()
+        flash("You have been successfully created new profile")
         return redirect(url_for('showProfiles'))
     else:
         return render_template('newProfile.html')
@@ -217,6 +218,7 @@ def editProfile(profile_id):
             editProfile.twitter = request.form['twitter']
         session.add(editProfile)
         session.commit()
+        flash("You have been successfully updated profile")
         return redirect(url_for('showProfiles'))
     else:
         return render_template('editProfile.html', profile=editProfile)
@@ -233,6 +235,7 @@ def deleteProfile(profile_id):
     if request.method == 'POST':
         session.delete(deleteProfile)
         session.commit()
+        flash("You have been successfully deleted profile")
         return redirect(url_for('showProfiles'))
     else:
         return render_template('deleteProfile.html', profile=deleteProfile)
@@ -272,6 +275,7 @@ def newProject(profile_id):
                             user_id = profile.user_id)
         session.add(newProject)
         session.commit()
+        flash("You have been successfully created new project")
         return redirect(url_for('showProjects', profile_id = profile_id))
     else:
         return render_template('newProject.html', profile=profile)
@@ -300,6 +304,7 @@ def editProject(profile_id, project_id):
             editProject.livedemo = request.form['livedemo']
         session.add(editProject)
         session.commit()
+        flash("You have been successfully updated project")
         return redirect(url_for('showProjects', profile_id = profile_id))
     else:
         return render_template('editProject.html', profile=profile,
@@ -319,6 +324,7 @@ def deleteProject(profile_id, project_id):
     if request.method == 'POST':
         session.delete(deleteProject)
         session.commit()
+        flash("You have been successfully deleted project")
         return redirect(url_for('showProjects', profile_id=profile_id))
     else:
         return render_template('deleteProject.html', profile=profile,
