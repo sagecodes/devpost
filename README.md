@@ -8,13 +8,20 @@ The project allows a user to login via a Google account using Oauth2 and create 
 ##Requirements:
 The project was tested and developed with:
 
-* flask 0.10.1
+* flask 0.10.1 and flask version dependencies (Jinja, etc)
 * python 2.7.10
-* SQL Alchemy 0.9.10
+* SQL Alchemy 1.0
 * oauth2client
 * SQLite3
 
-*note: for Udacity Grading the requirements should be met within the default udacity vagrant setup.
+## Notes for grading:
+Requirements should be met within the default udacity vagrant setup.
+
+Category = profile
+
+Project = catalog item
+
+Main.py should comply with PEP8 standards except camelCase function and variable names due to the style of code in teaching.
 
 ##Running the project
 Clone/download the project files to an environment where requirements are met.
