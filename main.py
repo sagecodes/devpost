@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import jsonify
 
 from database_setup import Base, Profile, Project, User
 from sqlalchemy import create_engine
@@ -166,6 +167,31 @@ def gdisconnect():
             json.dumps('Failed to revoke token for given user.', 400))
         response.headers['Content-Type'] = 'application/json'
         return response
+
+
+# JSON API Endpoints
+# =======================================================================
+
+# Make API Endpoint for full list of profiles (GET request)
+@app.route('/profiles/JSON/')
+def profilesJSON():
+    profiles = session.query(Profile).all()
+    return jsonify(profiles=[p.serialize for p in profiles])
+
+
+# Make API Endpoint for projects of selected profile (GET request)
+@app.route('/profile/<int:profile_id>/projects/JSON/')
+def profileMenuJSON(profile_id):
+    profile = session.query(Profile).filter_by(id=profile_id).one()
+    projects = session.query(Project).filter_by(profile_id=profile.id)
+    return jsonify(Projects=[p.serialize for p in projects])
+
+
+# Make API Endpoint for selected project from profile (GET request)
+@app.route('/profile/<int:profile_id>/project/<int:project_id>/JSON/')
+def menuItemJSON(profile_id, project_id):
+    project = session.query(Project).filter_by(id=project_id).one()
+    return jsonify(project=project.serialize)
 
 
 # Profile operations
