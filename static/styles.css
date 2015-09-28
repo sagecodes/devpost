@@ -49,4 +49,9 @@ body {
 .profile:hover {
     border: solid 0px;
     text-align: center;
+    background-color: #bdc3c7;
+}
+
+.projects-profile{
+    text-align: center;
 }

@@ -3,11 +3,8 @@
 
  {% block content %}
 
- <a href='{{url_for('showProfiles') }}'><< All Profiles</a>
-
- <h1>{{profile.name}}</h1>
-
-    <div>
+  <div class="projects-profile">
+        <h1>{{profile.name}}</h1>
         <img class="profile-photo" src="{{profile.picture}}"> <br>
         <a class="profile-name" href='{{url_for('showProjects',
          profile_id = profile.id) }}'>

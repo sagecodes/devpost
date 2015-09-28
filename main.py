@@ -178,7 +178,6 @@ def showProfiles():
     else:
         return render_template('profiles.html', profiles=profiles)
 
-
 # Create a new profile
 @app.route('/profile/new/' , methods=['GET', 'POST'])
 def newProfile():
