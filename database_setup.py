@@ -15,6 +15,15 @@ class User(Base):
     email = Column(String(250), nullable=False)
     picture = Column(String(250))
 
+    @property
+    def serialize(self):
+        return {'id': self.id,
+                'name': self.name,
+                'email': self.email,
+                'picture': self.picture,
+
+                }
+
 
 class Profile(Base):
 
@@ -28,6 +37,17 @@ class Profile(Base):
     twitter = Column(String(250))
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+
+    @property
+    def serialize(self):
+        return {'id': self.id,
+                'name': self.name,
+                'email': self.email,
+                'picture': self.picture,
+                'github': self.github,
+                'twitter': self.twitter,
+
+                }
 
 
 class Project(Base):
@@ -44,6 +64,17 @@ class Project(Base):
     profile = relationship(Profile)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+
+    @property
+    def serialize(self):
+        return {'id': self.id,
+                'name': self.name,
+                'picture': self.picture,
+                'description': self.description,
+                'sourcecode': self.sourcecode,
+                'livedemo': self.livedemo,
+
+                }
 
 
 engine = create_engine('sqlite:///devpostusers.db')
