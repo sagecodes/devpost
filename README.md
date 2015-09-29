@@ -13,6 +13,7 @@ The project was tested and developed with:
 * SQL Alchemy 1.0
 * oauth2client
 * SQLite3
+* requests
 
 ## Notes for grading:
 Requirements should be met within the default udacity vagrant setup.
@@ -24,7 +25,22 @@ Project = catalog item
 Main.py should comply with PEP8 standards except camelCase function and variable names due to the style of code in teaching.
 
 ##Running the project
-Clone/download the project files to an environment where requirements are met.
+* Clone/download the project files to an environment where requirements are met.
+
+* click login link in navigation to be taken to login page
+
+* Login with google account
+
+* Once logged in a link will be added to navigation bar to add new profile
+
+* Once you add a new profile you can create new projects within the profile page
+
+* edit and delete links will appear at the bottom of each project you create
+
+* edit and delete profile links are found at the bottom of the profile pages
+
+* please see API section in main.py for JSON endpoints
+
 
 navigate to project folder and run main.py `python main.py`
 
