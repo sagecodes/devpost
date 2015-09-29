@@ -27,6 +27,8 @@ Main.py should comply with PEP8 standards except camelCase function and variable
 
 * click login link in navigation to be taken to login page
 
+* navigate to project folder and run main.py `python main.py`
+
 * Login with google account
 
 * Once logged in a link will be added to navigation bar to add new profile
@@ -39,8 +41,6 @@ Main.py should comply with PEP8 standards except camelCase function and variable
 
 * please see API section in main.py for JSON endpoints
 
-
-navigate to project folder and run main.py `python main.py`
 
 ## Authors
 Sage Elliott
