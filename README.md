@@ -1,6 +1,4 @@
 #devpost
-
-#devpost
  This was a submission for project 3 of Udacity's Fullstack nanodegree. The main focus for this project was building the Flask backend so please excuse the rushed design.
 
 The project allows a user to login via a Google account using Oauth2 and create profiles containing a picture, contact info and any projects they would like to show. Each project take a name, picture, description, github URL, and a live demo URL.
@@ -16,7 +14,7 @@ The project was tested and developed with:
 * requests
 
 ## Notes for grading:
-Requirements should be met within the default udacity vagrant setup.
+Requirements should be met within the default udacity vagrant setup, but if any problem arises please check imports vs what you have installed.
 
 Category = profile
 
