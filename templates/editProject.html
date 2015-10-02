@@ -10,23 +10,23 @@
 
         <p>Name:</p>
         <input type='text' size='30' name='name'
-        placeholder = "{{ project.name }}">
+        value = "{{ project.name }}">
 
         <p>Profile Picture (URL):</p>
         <input type='text' size='30' name='picture'
-        placeholder = "{{ project.picture }}">
+        value = "{{ project.picture }}">
 
         <p>Description:</p>
         <input type='text' size='30' name='description'
-        placeholder = "{{ project.description }}">
+        value = "{{ project.description }}">
 
         <p>Source Code (URL):</p>
         <input type='text' size='30' name='sourcecode'
-        placeholder = "{{ project.sourcecode }}">
+        value = "{{ project.sourcecode }}">
 
         <p>Live Demo (URL):</p>
         <input type='text' size='30' name='livedemo'
-        placeholder = "{{ project.livedemo }}">
+        value = "{{ project.livedemo }}">
 
         <input type='submit' value='Update'>
         <a href='{{url_for('showProjects', profile_id = profile.id) }}'>Cancel</a>

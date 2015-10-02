@@ -9,23 +9,23 @@
 
         <p>Name:</p>
         <input type='text' size='30' name='name'
-        placeholder = "{{ profile.name }}">
+        value= "{{ profile.name }}">
 
         <p>Profile Picture (URL):</p>
         <input type='text' size='30' name='picture'
-        placeholder = "{{ profile.picture }}">
+        value = "{{ profile.picture }}">
 
         <p>Email:</p>
         <input type='text' size='30' name='email'
-        placeholder = "{{ profile.email }}">
+        value = "{{ profile.email }}">
 
         <p>Github (URL):</p>
         <input type='text' size='30' name='github'
-        placeholder = "{{ profile.github }}">
+        value = "{{ profile.github }}">
 
         <p>Twitter (URL):</p>
         <input type='text' size='30' name='twitter'
-        placeholder = "{{ profile.twitter }}">
+        value = "{{ profile.twitter }}">
 
         <input type='submit' value='Update'>
         <a href='{{url_for('showProfiles') }}'>Cancel</a>
