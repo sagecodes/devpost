@@ -37,6 +37,8 @@ class Profile(Base):
     twitter = Column(String(250))
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+    project = relationship("Project", cascade="all, delete-orphan",
+                           backref="parent")
 
     @property
     def serialize(self):
