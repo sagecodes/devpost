@@ -79,6 +79,6 @@ class Project(Base):
                 }
 
 
-engine = create_engine('sqlite:///devpostusers.db')
+engine = create_engine('postgresql:///catalog')
 
 Base.metadata.create_all(engine)

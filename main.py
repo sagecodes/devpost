@@ -23,7 +23,7 @@ app = Flask(__name__)
 # =======================================================================
 
 # create Session and connect to database
-engine = create_engine('sqlite:///devpostusers.db')
+engine = create_engine('postgresql:///catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
